@@ -5,7 +5,7 @@ export default (db: Database) => {
     getGeoList: ({ set }) => {
       const query = db.query(`SELECT * FROM routes;`); //create database structure and edit ..change table 'maps?'
       const result = query.all();
-      set.status = 200;
+      set.status = 200; //OK status
 
       return new Response(JSON.stringify({ routes: result }), {
         headers: { "Content-Type": "application/json" },

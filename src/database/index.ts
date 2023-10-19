@@ -11,4 +11,15 @@ db.query(
   );`
   ).run();
 
+  /*
+
+  route TEXT,
+  name TEXT,
+  gpx TEXT,
+  desc TEXT,
+  safe INTEGER,
+  length FLOAT/DOUBLE  <--
+  terrain TEXT,
+  difficulty INTEGER <--
+*/
 export default () => db;

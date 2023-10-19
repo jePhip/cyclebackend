@@ -24,8 +24,7 @@ export default (db: Database) => {
       const query = db.query(`DELETE FROM routes WHERE id = $id;`);
       const result = query.get({ $id: id });
       set.status = 200;
-
-      return new Response(JSON.stringify({ message: "success!" }), {
+      return new Response(JSON.stringify({ message: "success!", id }), {
         headers: { "Content-Type": "application/json" },
       });
     },
@@ -35,7 +34,7 @@ export default (db: Database) => {
       const query = db.prepare(`INSERT INTO routes (route, name, gpx) VALUES ($route, $name, $gpx);`);
       const { route, name, gpx } = body;
       query.run({ $route: JSON.stringify(route), $name: name, $gpx: gpx });
-
+  
       set.status = 200;
 
       return new Response(JSON.stringify({ message: "success!" }), {

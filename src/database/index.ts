@@ -1,5 +1,5 @@
 import { Database } from "bun:sqlite";
-const db = new Database("mydb.sqlite", { create: true });
+const db = new Database("db.sqlite", { create: true });
 
 
 db.query(

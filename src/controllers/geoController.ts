@@ -31,9 +31,9 @@ export default (db: Database) => {
     createGeo: ({ body, set }) => {
       //body = json content of post request
       
-      const query = db.prepare(`INSERT INTO routes (route, name, gpx) VALUES ($route, $name, $gpx);`);
-      const { route, name, gpx } = body;
-      query.run({ $route: JSON.stringify(route), $name: name, $gpx: gpx });
+      const query = db.prepare(`INSERT INTO routes (route, name, gpx, length, difficulty, terrain, desc) VALUES ($route, $name, $gpx, $length, $difficulty, $terrain, $desc);`);
+      const { route, name, gpx, length, difficulty, terrain, desc } = body;
+      query.run({ $route: JSON.stringify(route), $name: name, $gpx: gpx, $length: length, $difficulty: difficulty, $terrain: terrain, $desc: desc });
   
       set.status = 200;
 

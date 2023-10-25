@@ -7,7 +7,11 @@ db.query(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     route TEXT, 
     name TEXT,
-    gpx TEXt
+    gpx TEXT,
+    difficulty TEXT,
+    length DOUBLE,
+    terrain TEXT,
+    desc TEXT
   );`
   ).run();
 

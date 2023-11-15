@@ -11,7 +11,8 @@ db.query(
     difficulty TEXT,
     length DOUBLE,
     terrain TEXT,
-    desc TEXT
+    desc TEXT,
+    elevation DOUBLE
   );`
   ).run();
 

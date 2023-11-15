@@ -1,7 +1,31 @@
 import Database from "bun:sqlite";
+import fetch from 'node-fetch'
 
 export default (db: Database) => {
   return {
+    getElevation: async ({body, set}) => {
+
+      let res = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${body.lat2},%2C${body.long2}origins=Washington%2C%20DC%7CBoston&units=imperial&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`);
+      //const response = await res.json()
+      set.status = 200;
+      const response = await res.json()
+      console.log(response)
+      return new Response(JSON.stringify({ response }), {
+        headers: { "Content-Type": "application/json" },
+      });
+    },
+    getDistance: async ({body, set}) => {
+      console.log(body)
+     // console.log(body.lat2, body.long2)
+      //console.log(`https://maps.googleapis.com/maps/api/distancematrix/json?mode=bicylcing?destinations=${body.lat2},${body.long2}?origins=Washington%2C%20DC%7CBoston&units=imperial&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`)
+      let res = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${body.lat2},${body.long2}&origins=${body.lat1},${body.long1}&units=imperial&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`);
+      const response = await res.json()
+      set.status = 200;
+      //console.log(response)
+      return new Response(JSON.stringify({ response }), {
+        headers: { "Content-Type": "application/json" },
+      });
+    },
     getGeoList: ({ set }) => {
       const query = db.query(`SELECT * FROM routes;`); //create database structure and edit ..change table 'maps?'
       const result = query.all();
@@ -31,9 +55,9 @@ export default (db: Database) => {
     createGeo: ({ body, set }) => {
       //body = json content of post request
       
-      const query = db.prepare(`INSERT INTO routes (route, name, gpx, length, difficulty, terrain, desc) VALUES ($route, $name, $gpx, $length, $difficulty, $terrain, $desc);`);
-      const { route, name, gpx, length, difficulty, terrain, desc } = body;
-      query.run({ $route: JSON.stringify(route), $name: name, $gpx: gpx, $length: length, $difficulty: difficulty, $terrain: terrain, $desc: desc });
+      const query = db.prepare(`INSERT INTO routes (route, name, gpx, length, difficulty, terrain, desc, elevation) VALUES ($route, $name, $gpx, $length, $difficulty, $terrain, $desc, $elevation);`);
+      const { route, name, gpx, length,  difficulty, terrain, desc, elevation} = body;
+      query.run({ $route: JSON.stringify(route), $name: name, $gpx: gpx, $length: length, $difficulty: difficulty, $terrain: terrain, $desc: desc, $elevation: elevation});
   
       set.status = 200;
 

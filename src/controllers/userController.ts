@@ -11,7 +11,7 @@ export default (db: Database) => {
         headers: { "Content-Type": "application/json" },
       });
     },
-    getGeoById: ({ params: { id }, set }) => {
+    getUserById: ({ params: { id }, set }) => {
       const query = db.query(`SELECT * FROM users WHERE id = $id;`);
       const result = query.get({ $id: id });
       set.status = 200;
@@ -28,7 +28,7 @@ export default (db: Database) => {
         headers: { "Content-Type": "application/json" },
       });
     },
-    createGeo: ({ body, set }) => {
+    createUser: ({ body, set }) => {
       //body = json content of post request
       
       const query = db.prepare(`INSERT INTO users (username, password,) VALUES ($username, $password);`);

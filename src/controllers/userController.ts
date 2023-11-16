@@ -7,11 +7,12 @@ export default (db: Database) => {
       const result = query.all();
       set.status = 200; //OK status
 
-      return new Response(JSON.stringify({ routes: result }), {
+      return new Response(JSON.stringify({ users: result }), {
         headers: { "Content-Type": "application/json" },
       });
     },
     getUserById: ({ params: { id }, set }) => {
+        console.log('in get user')
       const query = db.query(`SELECT * FROM users WHERE id = $id;`);
       const result = query.get({ $id: id });
       set.status = 200;

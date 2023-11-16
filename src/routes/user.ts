@@ -5,7 +5,7 @@ import Database from 'bun:sqlite';
 export default (db: Database) => {
     const UserController = initUserController(db);
 
-    return new Elysia({ prefix: '/geo'})
+    return new Elysia({ prefix: '/user'})
         .get('/', UserController.getUserList)
         .get('/:id', UserController.getUserById)
         .post('/', UserController.createUser)

@@ -1,9 +1,8 @@
 import { Database } from "bun:sqlite";
 const db = new Database("db.sqlite", { create: true });
 
-
 db.query(
-    `CREATE TABLE IF NOT EXISTS routes(
+  `CREATE TABLE IF NOT EXISTS routes(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     route TEXT, 
     name TEXT,
@@ -13,16 +12,16 @@ db.query(
     terrain TEXT,
     desc TEXT
   );`
-  ).run();
+).run();
 
-
-  db.query(
-    `CREATE TABLE IF NOT EXISTS users(
-    username TEXT PRIMARY KEY,
-    password TEXT
+db.query(
+  `CREATE TABLE IF NOT EXISTS users(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,  
+      username TEXT,
+      password TEXT
   );`
-  ).run();
-  /*
+).run();
+/*
 
   route TEXT,
   name TEXT,

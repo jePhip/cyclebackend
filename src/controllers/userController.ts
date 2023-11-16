@@ -32,7 +32,7 @@ export default (db: Database) => {
     createUser: ({ body, set }) => {
       //body = json content of post request
       
-      const query = db.prepare(`INSERT INTO users (username, password,) VALUES ($username, $password);`);
+      const query = db.prepare(`INSERT INTO users (username, password) VALUES ($username, $password);`);
       const { username, password } = body;
       query.run({$username: username, $password: password});
   

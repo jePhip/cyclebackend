@@ -13,4 +13,3 @@ export default (db: Database) => {
         .delete('/:id', GeoController.removeGeoById)
         
 }
-    

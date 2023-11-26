@@ -3,6 +3,7 @@ import swagger from "@elysiajs/swagger";
 import cors from "@elysiajs/cors";
 import initDB from './database';
 import initGeo from './routes/geo';
+import initUsers from './routes/user'
 
 const db = initDB();
 
@@ -19,10 +20,11 @@ const app = new Elysia()
   }))
   .group('/v1', app => app//group of endpoints
     .use(initGeo(db))//list of crud endpoints
+    .use(initUsers(db))
   )
   .listen(3000);
 
 
 console.log(
-  `Geo App is running at ${app.server?.hostname}:${app.server?.port}`
+  `API is running at ${app.server?.hostname}:${app.server?.port}`
 );

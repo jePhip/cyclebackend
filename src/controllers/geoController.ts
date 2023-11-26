@@ -12,7 +12,7 @@ export default (db: Database) => {
         //console.log(body[i], body[i].latitude, body[i].longitude)
         reqString += `%7C${body[i].latitude}%2C${body[i].longitude}`
       }
-      reqString += `&samples=${length}&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`
+      reqString += `&samples=${Math.ceil(length/(length/4))}&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`
       console.log(reqString)
      // let res = await fetch(`https://maps.googleapis.com/maps/api/elevation/json?path=${body.lat2},%2C${body.long2}|-34.397,150.644&units=imperial&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`);
       let res = await fetch(reqString);
@@ -25,13 +25,19 @@ export default (db: Database) => {
       });
     },
     getDistance: async ({body, set}) => {
-      console.log(body)
-     // console.log(body.lat2, body.long2)
-      //console.log(`https://maps.googleapis.com/maps/api/distancematrix/json?mode=bicylcing?destinations=${body.lat2},${body.long2}?origins=Washington%2C%20DC%7CBoston&units=imperial&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`)
-      let res = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${body.lat2},${body.long2}&origins=${body.lat1},${body.long1}&units=imperial&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`);
+      const length = Object.keys(body).length;
+      let reqString = `https://maps.googleapis.com/maps/api/distancematrix/json?destinations=`
+      
+      reqString += `${body[1].latitude}%2C${body[1].longitude}`
+      for(let i = 2; i < length; i++){
+        reqString += `%7C${body[i].latitude}%2C${body[i].longitude}`
+      }
+      reqString += `&origins=${body[0].latitude}%2C${body[0].longitude}&units=imperial&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`
+      console.log(reqString)
+     // let res = await fetch(`https://maps.googleapis.com/maps/api/elevation/json?path=${body.lat2},%2C${body.long2}|-34.397,150.644&units=imperial&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`);
+      let res = await fetch(reqString);
       const response = await res.json()
       set.status = 200;
-      //console.log(response)
       return new Response(JSON.stringify({ response }), {
         headers: { "Content-Type": "application/json" },
       });

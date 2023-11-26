@@ -4,12 +4,22 @@ import fetch from 'node-fetch'
 export default (db: Database) => {
   return {
     getElevation: async ({body, set}) => {
-
-      let res = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${body.lat2},%2C${body.long2}origins=Washington%2C%20DC%7CBoston&units=imperial&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`);
-      //const response = await res.json()
-      set.status = 200;
+     
+      const length = Object.keys(body).length;
+      let reqString = `https://maps.googleapis.com/maps/api/elevation/json?path=`
+      reqString += `${body[0].latitude}%2C${body[0].longitude}`
+      for(let i = 1; i < length; i++){
+        //console.log(body[i], body[i].latitude, body[i].longitude)
+        reqString += `%7C${body[i].latitude}%2C${body[i].longitude}`
+      }
+      reqString += `&samples=${length}&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`
+      console.log(reqString)
+     // let res = await fetch(`https://maps.googleapis.com/maps/api/elevation/json?path=${body.lat2},%2C${body.long2}|-34.397,150.644&units=imperial&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`);
+      let res = await fetch(reqString);
       const response = await res.json()
-      console.log(response)
+      set.status = 200;
+     // const response = await res.json()
+     // console.log(response)
       return new Response(JSON.stringify({ response }), {
         headers: { "Content-Type": "application/json" },
       });

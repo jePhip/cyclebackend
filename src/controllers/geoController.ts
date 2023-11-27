@@ -4,16 +4,15 @@ import fetch from 'node-fetch'
 export default (db: Database) => {
   return {
     getElevation: async ({body, set}) => {
-     
       const length = Object.keys(body).length;
-      let reqString = `https://maps.googleapis.com/maps/api/elevation/json?path=`
+      let reqString = `https://maps.googleapis.com/maps/api/elevation/json?locations=`
       reqString += `${body[0].latitude}%2C${body[0].longitude}`
       for(let i = 1; i < length; i++){
         //console.log(body[i], body[i].latitude, body[i].longitude)
         reqString += `%7C${body[i].latitude}%2C${body[i].longitude}`
       }
-      reqString += `&samples=${Math.ceil(length/(length/4))}&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`
-      console.log(reqString)
+      reqString += `&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`
+     // console.log(reqString)
      // let res = await fetch(`https://maps.googleapis.com/maps/api/elevation/json?path=${body.lat2},%2C${body.long2}|-34.397,150.644&units=imperial&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`);
       let res = await fetch(reqString);
       const response = await res.json()
@@ -24,24 +23,7 @@ export default (db: Database) => {
         headers: { "Content-Type": "application/json" },
       });
     },
-    getDistance: async ({body, set}) => {
-      const length = Object.keys(body).length;
-      let reqString = `https://maps.googleapis.com/maps/api/distancematrix/json?destinations=`
-      
-      reqString += `${body[1].latitude}%2C${body[1].longitude}`
-      for(let i = 2; i < length; i++){
-        reqString += `%7C${body[i].latitude}%2C${body[i].longitude}`
-      }
-      reqString += `&origins=${body[0].latitude}%2C${body[0].longitude}&units=imperial&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`
-      console.log(reqString)
-     // let res = await fetch(`https://maps.googleapis.com/maps/api/elevation/json?path=${body.lat2},%2C${body.long2}|-34.397,150.644&units=imperial&mode=bicycling&key=AIzaSyApfskDsY7qidZT_vJMhfEUeZwXcqQqo-A`);
-      let res = await fetch(reqString);
-      const response = await res.json()
-      set.status = 200;
-      return new Response(JSON.stringify({ response }), {
-        headers: { "Content-Type": "application/json" },
-      });
-    },
+
     getGeoList: ({ set }) => {
       const query = db.query(`SELECT * FROM routes;`); //create database structure and edit ..change table 'maps?'
       const result = query.all();

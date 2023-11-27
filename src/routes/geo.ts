@@ -12,7 +12,6 @@ export default (db: Database) => {
         .post('/', GeoController.createGeo)
         .put('/:id', GeoController.updateGeo)
         .delete('/:id', GeoController.removeGeoById)
-        .post('/d', GeoController.getDistance)
         .post('/e', GeoController.getElevation)
         
         

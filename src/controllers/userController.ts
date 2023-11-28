@@ -2,8 +2,26 @@ import Database from "bun:sqlite";
 
 export default (db: Database) => {
   return {
+    validateUser:({body, set}) => {
+      const query = db.prepare(`SELECT (username,password) FROM users WHERE username = $username`);
+      const { username, password } = body;
+      query.run({$username: username, $password: password});
+  
+      set.status = 200;
+      if(password && body == username+password){
+      return new Response(JSON.stringify({ message: "success!" }), {
+        headers: { "Content-Type": "application/json" },
+
+      }}
+      else
+      return new Response(JSON.stringify({ message: "fail!" }), {
+        headers: { "Content-Type": "application/json" },
+      
+    });
+    },
+
     getUserList: ({ set }) => {
-      const query = db.query(`SELECT * FROM users;`); //create database structure and edit ..change table 'maps?'
+      const query = db.query(`SELECT * FROM users;`);
       const result = query.all();
       set.status = 200; //OK status
 

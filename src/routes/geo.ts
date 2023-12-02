@@ -2,6 +2,7 @@ import { Elysia } from 'elysia'
 import initGeoController from '../controllers/geoController';
 import Database from 'bun:sqlite';
 
+
 export default (db: Database) => {
     const GeoController = initGeoController(db);
 
@@ -11,5 +12,7 @@ export default (db: Database) => {
         .post('/', GeoController.createGeo)
         .put('/:id', GeoController.updateGeo)
         .delete('/:id', GeoController.removeGeoById)
+        .post('/e', GeoController.getElevation)
+        
         
 }

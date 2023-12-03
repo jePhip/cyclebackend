@@ -26,5 +26,5 @@ const app = new Elysia()
 
 
 console.log(
-  `Geo App is running at ${app.server?.hostname}:${app.server?.port}`
+  `API is running at ${app.server?.hostname}:${app.server?.port}`
 );

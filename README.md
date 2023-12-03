@@ -1,15 +1,13 @@
-# Elysia with Bun runtime
+# Backend API to https://github.com/Cyralex/CycleProject
 
 ## Getting Started
-To get started with this template, simply paste this command into your terminal:
-```bash
-bun create elysia ./elysia-example
+Ensure you have installed dependancies
 ```
-
-## Development
+bun i
+```
 To start the development server run:
-```bash
+```
 bun run dev
 ```
 
-Open http://localhost:3000/ with your browser to see the result.
+URL: http://localhost:3000/ 

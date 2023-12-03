@@ -11,6 +11,6 @@ export default (db: Database) => {
         .post('/', UserController.createUser)
         .put('/:id', UserController.updateUser)
         .delete('/:id', UserController.removeUserById)
-        
+        .post('/:username', UserController.validateUser)
 }
     

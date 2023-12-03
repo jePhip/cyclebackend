@@ -16,9 +16,8 @@ db.query(
 ).run();
 
 db.query(
-  `CREATE TABLE IF NOT EXISTS users(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,  
-      username TEXT,
+  `CREATE TABLE IF NOT EXISTS users(  
+      username TEXT PRIMARY KEY,
       password TEXT
   );`
 ).run();

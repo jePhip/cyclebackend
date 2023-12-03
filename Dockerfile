@@ -1,6 +1,6 @@
 FROM oven/bun
 
-WORKDIR /CycleBackend
+WORKDIR /
 
 COPY package.json .
 COPY bun.lockb .

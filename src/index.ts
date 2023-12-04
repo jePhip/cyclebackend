@@ -5,7 +5,7 @@ import initDB from './database';
 import initGeo from './routes/geo';
 import initUsers from './routes/user'
 
-const db = initDB();//
+const db = initDB();////
 
 const app = new Elysia()
   .use(cors())//

@@ -1,7 +1,7 @@
 import { Database } from "bun:sqlite";
 const db = new Database("db.sqlite", { create: true });
 
-db.query(
+db.query(//
   `CREATE TABLE IF NOT EXISTS routes(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     route TEXT, 

@@ -3,21 +3,23 @@ import Database from "bun:sqlite";
 export default (db: Database) => {
   return {
     validateUser: ({ body, set }) => {
-      console.log("validating")
-      const query = db.prepare(
-        `SELECT (username,password) FROM users WHERE username = $username`
+      console.log("validating");
+      const query = db.query(
+        `SELECT * FROM users WHERE username = $username AND password = $password;`
       );
-      const username = body.username;
-      const password = body.password;
-      query.run({ $username: username, $password: password });
+      console.log(body.username, "\n", body.password);
 
-      if (password && username == username + password) {
+      const result = query.get({
+        $username: body.username,
+        $password: body.password,
+      });
+      if (result == null) {
         set.status = 200;
-        return new Response(JSON.stringify({ message: "success!" }), {
+        return new Response(JSON.stringify({ message: "fail!" }), {
           headers: { "Content-Type": "application/json" },
         });
       }
-      return new Response(JSON.stringify({ message: "fail!" }), {
+      return new Response(JSON.stringify({ message: "success!" }), {
         headers: { "Content-Type": "application/json" },
       });
     },
@@ -67,7 +69,9 @@ export default (db: Database) => {
     updateUser: ({ params: { username }, body, set }) => {
       const attrs = Object.keys(body);
       const updateValues = attrs.map((a) => `${a} = $${a}`).join(`, `);
-      let query = db.query(`UPDATE users SET ${updateValues} WHERE username = $username;`);
+      let query = db.query(
+        `UPDATE users SET ${updateValues} WHERE username = $username;`
+      );
       let updateObj = {};
       for (let a in body) {
         updateObj = {

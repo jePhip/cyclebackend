@@ -7,10 +7,11 @@ export default (db: Database) => {
 
     return new Elysia({ prefix: '/user'})
         .get('/', UserController.getUserList)
-        .get('/:id', UserController.getUserByUsername)
+        .get('/:username', UserController.getUserByUsername)
         .post('/', UserController.createUser)
-        .put('/:id', UserController.updateUser)
-        .delete('/:id', UserController.removeUserByUsername)
-        .post('/:username', UserController.validateUser)
+        .put('/:username', UserController.updateUser)
+        .delete('/:username', UserController.removeUserByUsername)
+        .post('/', UserController.validateUser)
+
 }
     

@@ -7,7 +7,7 @@ import initUsers from './routes/user'
 
 const db = initDB();
 
-const app = new Elysia()
+const app = new Elysia()//
   .use(cors())//
   .use(swagger({//documentation
     path: '/v1/docs',

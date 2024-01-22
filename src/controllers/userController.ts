@@ -31,21 +31,21 @@ export default (db: Database) => {
         headers: { "Content-Type": "application/json" },
       });
     },
-    getUserById: ({ params: { id }, set }) => {
+    getUserByUsername: ({ params: { username }, set }) => {
       console.log("in get user");
-      const query = db.query(`SELECT * FROM users WHERE id = $id;`);
-      const result = query.get({ $id: id });
+      const query = db.query(`SELECT * FROM users WHERE username = $username;`);
+      const result = query.get({ $username: username });
       set.status = 200;
 
       return new Response(JSON.stringify({ user: result }), {
         headers: { "Content-Type": "application/json" },
       });
     },
-    removeUserById: ({ params: { id }, set }) => {
-      const query = db.query(`DELETE FROM users WHERE id = $id;`);
-      const result = query.get({ $id: id });
+    removeUserByUsername: ({ params: { username }, set }) => {
+      const query = db.query(`DELETE FROM users WHERE username = $username;`);
+      const result = query.get({ $username: username });
       set.status = 200;
-      return new Response(JSON.stringify({ message: "success!", id }), {
+      return new Response(JSON.stringify({ message: "success!", username }), {
         headers: { "Content-Type": "application/json" },
       });
     },
@@ -64,10 +64,10 @@ export default (db: Database) => {
         headers: { "Content-Type": "application/json" },
       });
     },
-    updateUser: ({ params: { id }, body, set }) => {
+    updateUser: ({ params: { username }, body, set }) => {
       const attrs = Object.keys(body);
       const updateValues = attrs.map((a) => `${a} = $${a}`).join(`, `);
-      let query = db.query(`UPDATE users SET ${updateValues} WHERE id = $id;`);
+      let query = db.query(`UPDATE users SET ${updateValues} WHERE username = $username;`);
       let updateObj = {};
       for (let a in body) {
         updateObj = {
@@ -76,7 +76,7 @@ export default (db: Database) => {
         };
       }
       console.log(updateObj);
-      let result = query.run({ ...updateObj, $id: id });
+      let result = query.run({ ...updateObj, $username: username });
       set.status = 200;
 
       return new Response(JSON.stringify({ message: "success!" }), {

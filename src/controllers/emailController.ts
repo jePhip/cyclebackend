@@ -10,7 +10,8 @@ const transporter = nodemailer.createTransport({
     secure: true,
     auth: {
       user: "bolivarcyclingtest@gmail.com",
-      pass: "udem gsyv okur orvl",     
+      pass: "udem gsyv okur orvl"
+          
     },
   });
 
@@ -18,17 +19,16 @@ const transporter = nodemailer.createTransport({
   const mailOptions = {
     from: 'bolivarcyclingtest@gmail.com',
     to: 'bolivarcyclingtest@gmail.com',
-    subject: 'GPX File and Text Submission',
-    text: text,
+    subject: 'GPX File and Text Submission',    
     attachments: [{
         filename: 'gpx-file.gpx',
-        content: gpxFile,
+        content: file,
     }],
 };
 
 export async function sendMail(req)
 { 
-  const { gpxFile, text } = req.body;
+  const { file, name} = req.body;
   try {
     await transporter.sendMail(mailOptions);
     return new Response('Email sent successfully!', { status: 200 });

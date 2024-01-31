@@ -1,9 +1,11 @@
 import { Elysia } from 'elysia';
-import { sendEmail } from './EmailController.js'; // Import controller function
+import { sendMail } from './emailController.js'; // Import controller function
+
+
 
 const app = new Elysia();
 
-app.post('/send-email', async (req) => {
+app.post('/email', async (req) => {
     try {
       await sendEmail(req);
       return new Response('Email sent successfully!', { status: 200 });

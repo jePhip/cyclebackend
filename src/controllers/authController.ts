@@ -5,10 +5,9 @@ import Database from "bun:sqlite";
 
 export default (db: Database) => {
   return {
-    signout: async ({ body, set }) => {
-        if (!res.locals.session) {
-            return res.status(401).end();
-        }
+    signout: async ({ body, set, cookie: { name } }) => {
+
+        console.log(name.value)
 
         await lucia.invalidateSession(res.locals.session.id);
             return new Response(JSON.stringify({ message: "invalid username" }), {

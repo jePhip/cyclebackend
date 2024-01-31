@@ -13,5 +13,6 @@ export default (db: Database) => {
   return new Elysia({ prefix: "/auth" }).post(
     "/signup",
     AuthController.signupUser
-  ).post("/signin", AuthController.signin);
+  ).post("/signin", AuthController.signin)
+  .post("/signout", AuthController.signout);
 };

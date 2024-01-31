@@ -16,11 +16,21 @@ db.query(
 ).run();
 
 db.query(
-  `CREATE TABLE IF NOT EXISTS users(  
-      username TEXT PRIMARY KEY,
-      password TEXT
+  `CREATE TABLE IF NOT EXISTS user(  
+    id TEXT NOT NULL PRIMARY KEY,
+    username TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL
   );`
 ).run();
+
+db.query(`CREATE TABLE IF NOT EXISTS session (
+  id TEXT NOT NULL PRIMARY KEY,
+  expires_at INTEGER NOT NULL,
+  user_id TEXT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id)
+)`).run();
+
+
 /*
 
   route TEXT,

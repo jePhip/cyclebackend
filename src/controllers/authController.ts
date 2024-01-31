@@ -9,13 +9,14 @@ export default (db: Database) => {
         if (!res.locals.session) {
             return res.status(401).end();
         }
+
         await lucia.invalidateSession(res.locals.session.id);
             return new Response(JSON.stringify({ message: "invalid username" }), {
                 headers: { "Content-Type": "application/json",
                             "Set-Cookie": lucia.createBlankSessionCookie().serialize()},
               });
     },
-
+    
 
     signin: async ({ body, set }) => {
       const username: string | null = body.username ?? null;

@@ -30,7 +30,6 @@ db.query(`CREATE TABLE IF NOT EXISTS session (
   FOREIGN KEY (user_id) REFERENCES user(id)
 )`).run();
 
-
 /*
 
   route TEXT,

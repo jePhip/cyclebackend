@@ -1,9 +1,20 @@
 import { Elysia } from 'elysia';
-import { sendMail } from './emailController.js'; // Import controller function
+import initEmailController from '../controllers/emailController';
+
+//import { sendMail } from './emailController.js'; // Import controller function
+
+export default() =>
+{ 
+  const emailController = initEmailController();
+
+  return new Elysia({ prefix: '/geo'})
+        .post('/', emailController.sendEmail)
+        
+}
 
 
 
-const app = new Elysia();
+/*const app = new Elysia();
 
 app.post('/email', async (req) => {
     try {
@@ -13,6 +24,7 @@ app.post('/email', async (req) => {
       return new Response('Failed to send email.', { status: 500 });
     }
   });
+  */
 
 
 

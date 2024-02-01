@@ -1,7 +1,8 @@
 import nodemailer from 'nodemailer';
 import { config } from 'vue-email/compiler';
 
-
+export default() =>
+{
 // create transporter 
 const transporter = nodemailer.createTransport({
     service: "Gmail",
@@ -26,7 +27,7 @@ const transporter = nodemailer.createTransport({
     }],
 };
 
-export async function sendMail(req)
+export async function sendMail()
 { 
   const { file, name} = req.body;
   try {

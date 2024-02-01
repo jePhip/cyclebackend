@@ -9,10 +9,9 @@ import initAuthController from "../controllers/authController";
 
 export default (db: Database) => {
   const AuthController = initAuthController(db);
-  console.log("elysia");
   return new Elysia({ prefix: "/auth" }).post(
     "/signup",
     AuthController.signupUser
-  ).post("/signin", AuthController.signin)
-  .post("/signout", AuthController.signout);
+  ).post("/login", AuthController.login)
+  .post("/logout", AuthController.logout);
 };

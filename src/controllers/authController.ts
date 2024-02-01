@@ -5,19 +5,18 @@ import Database from "bun:sqlite";
 
 export default (db: Database) => {
   return {
-    signout: async ({ body, set, cookie: { name } }) => {
-
-        console.log(name.value)
-
-        await lucia.invalidateSession(res.locals.session.id);
-            return new Response(JSON.stringify({ message: "invalid username" }), {
-                headers: { "Content-Type": "application/json",
-                            "Set-Cookie": lucia.createBlankSessionCookie().serialize()},
-              });
+    logout: async ({ body, set, cookie: { name } }) => {
+      await lucia.invalidateSession(name.value);
+      set.status = 200;
+      return new Response(JSON.stringify({ message: "signed out!" }), {
+        headers: {
+          "Content-Type": "application/json",
+          "Set-Cookie": lucia.createBlankSessionCookie().serialize(),
+        },
+      });
     },
-    
 
-    signin: async ({ body, set }) => {
+    login: async ({ body, set }) => {
       const username: string | null = body.username ?? null;
       if (
         !username ||
@@ -70,10 +69,8 @@ export default (db: Database) => {
     },
 
     signupUser: async ({ body, set }) => {
-      console.log("console");
       try {
         const username: string | null = body.username ?? null;
-        console.log("in handler");
         if (
           !username ||
           username.length < 3 ||

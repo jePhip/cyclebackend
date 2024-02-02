@@ -1,23 +1,11 @@
 import nodemailer from 'nodemailer';
-// import { config } from 'vue-email/compiler';
-
-export default() =>
-{
+import { brotliDecompressSync } from 'zlib';
 
 
-  /*test: ({params: body}) => {
-  return new Response(JSON.stringify({ message: "success!"}), {
-    headers: { "Content-Type": "application/json" },
-  });
-}
+export default() => {
 
-
-
-
-
-
-/*  // create transporter 
-const transporter = nodemailer.createTransport({
+  //create transporter
+  const transporter = nodemailer.createTransport({
     service: "Gmail",
     host: "smtp.gmail.com",
     port: 465,
@@ -29,28 +17,38 @@ const transporter = nodemailer.createTransport({
     },
   });
 
-  // mail options 
-  const mailOptions = {
-    from: 'bolivarcyclingtest@gmail.com',
-    to: 'bolivarcyclingtest@gmail.com',
-    subject: 'GPX File and Text Submission',    
-    attachments: [{
-        filename: 'gpx-file.gpx',
-        content: file,
-    }],
-};
+    
 
+  return {
+    sendSuggestion: ({body, set}) =>
+    { 
 
-/*export async function sendMail({ body, set}) =>
-{ 
-  const { file, name} = req.body;
-  try {
-    await transporter.sendMail(mailOptions);
-    return new Response('Email sent successfully!', { status: 200 });
-} catch (error) {
-    console.error('Error sending email:', error);
-    return new Response('Failed to send email.', { status: 500 });
-}*/
+    // mail options 
+    const mailOptions = {
+      from: 'bolivarcyclingtest@gmail.com',
+      to: 'bolivarcyclingtest@gmail.com',
+      subject: 'New Route Suggestion from Bolivar Cycling Website!',    
+      attachments: [{
+          filename: body.name + '.gpx',
+          content: body.route
+      }],
+      text: 'A new route has been submitted for your review! \n Name of route: ' + body.name
 
-//});
+  };
+      transporter.sendMail(mailOptions);
+    }
+  };
 }
+
+ 
+
+
+
+
+
+
+ 
+
+
+  
+

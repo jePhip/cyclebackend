@@ -7,8 +7,8 @@ export default() =>
 { 
   const emailController = initEmailController();
 
-  return new Elysia({ prefix: '/geo'})
-        .post('/', emailController.sendEmail)
+  return new Elysia({ prefix: '/email'})
+        .post('/', () => 'success')
         
 }
 

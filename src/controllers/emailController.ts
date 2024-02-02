@@ -1,9 +1,22 @@
 import nodemailer from 'nodemailer';
-import { config } from 'vue-email/compiler';
+// import { config } from 'vue-email/compiler';
 
 export default() =>
 {
-// create transporter 
+
+
+  /*test: ({params: body}) => {
+  return new Response(JSON.stringify({ message: "success!"}), {
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+
+
+
+
+
+/*  // create transporter 
 const transporter = nodemailer.createTransport({
     service: "Gmail",
     host: "smtp.gmail.com",
@@ -27,7 +40,8 @@ const transporter = nodemailer.createTransport({
     }],
 };
 
-export async function sendMail()
+
+/*export async function sendMail({ body, set}) =>
 { 
   const { file, name} = req.body;
   try {
@@ -36,6 +50,7 @@ export async function sendMail()
 } catch (error) {
     console.error('Error sending email:', error);
     return new Response('Failed to send email.', { status: 500 });
+}*/
+
+//});
 }
-});
-};

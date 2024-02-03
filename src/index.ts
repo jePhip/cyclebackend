@@ -41,13 +41,37 @@ const app = new Elysia() //
         },
       },
     })
-  )//.use(cookie())
+  ) //.use(cookie())
   .group("/v1", (app) =>
     app
-       //group of endpoints
+      .use(initAuth(db))
+      .on("beforeHandle", async ({ cookie, set }) => {
+        const cookieHeader = context.request.headers.get("Cookie") ?? "";
+        const sessionId = lucia.readSessionCookie(cookieHeader);
+        console.log(cookie, "cookie");
+        console.log(sessionId, "sessionid");
+        if (!sessionId) {
+          set.status = 401;
+          return {
+            success: false,
+            message: "Unauthorized",
+            data: null,
+          };
+        }
+        const { session, user } = await lucia.validateSession(sessionId);
+        console.log(session, user, "sesion, user");
+        if (!user) {
+          set.status = 401;
+          return {
+            success: false,
+            message: "Unauthorized",
+            data: null,
+          };
+        }
+      })
+      //group of endpoints
       .use(initGeo(db)) //list of crud endpoints
       .use(initUsers(db))
-      .use(initAuth(db))
   )
   .listen(3000);
 

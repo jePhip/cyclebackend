@@ -3,6 +3,7 @@ import { Elysia } from "elysia";
 import { verifyRequestOrigin } from "lucia";
 
 import type { User, Session } from "lucia";
+//decorates the request with user and session objects
 
 export const isAuthenticated = (app: Elysia) =>
   app.derive(

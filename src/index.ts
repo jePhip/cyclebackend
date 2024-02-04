@@ -4,14 +4,10 @@ import cors from "@elysiajs/cors";
 import initDB from "./database";
 import initGeo from "./routes/geo";
 import initUsers from "./routes/user";
-import { jwt } from "@elysiajs/jwt";
 import { Lucia } from "lucia";
 import { BunSQLiteAdapter } from "@lucia-auth/adapter-sqlite";
 import { isAuthenticated } from "./middleware/auth";
 import initAuth from "./routes/auth";
-import { cookie } from "@elysiajs/cookie";
-import authMiddleware from "./middleware/authMiddleware";
-import auth from "./routes/auth";
 export const db = initDB();
 export const adapter = new BunSQLiteAdapter(db, {
   user: "user",
@@ -31,7 +27,11 @@ export const lucia = new Lucia(adapter, {
 });
 
 const app = new Elysia() //
-  .use(cors()) //
+  .use(
+    cors({
+      credentials: true,
+    })
+  ) //
   .use(
     swagger({
       //documentation
@@ -45,8 +45,9 @@ const app = new Elysia() //
     })
   )
   .use(isAuthenticated)
-  .use(initAuth(db))
-  .on("beforeHandle", async ({ cookie, set, request, user, session }) => {
+  .group("/v1", (app) => app.use(initGeo(db)).use(initAuth(db))) //routes that that don't require authorization
+
+  .on("beforeHandle", async ({ set, user, session }) => {
     if (!session) {
       set.status = 401;
       return {
@@ -65,7 +66,7 @@ const app = new Elysia() //
       };
     }
   })
-  .group("/v1", (app) =>
+  .group("/a1", (app) =>
     app
 
       //group of endpoints

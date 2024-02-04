@@ -11,7 +11,8 @@ db.query(
     length DOUBLE,
     terrain TEXT,
     desc TEXT,
-    elevation DOUBLE
+    elevation DOUBLE,
+    poi TEXT
   );`
 ).run();
 

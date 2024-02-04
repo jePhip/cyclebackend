@@ -32,5 +32,6 @@ db.query(
   length FLOAT/DOUBLE  <--
   terrain TEXT,
   difficulty INTEGER <--
+  poi TEXT
 */
 export default () => db;

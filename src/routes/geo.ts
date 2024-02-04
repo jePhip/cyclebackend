@@ -12,7 +12,7 @@ export default (db: Database) => {
         .post('/', GeoController.createGeo)
         .put('/:id', GeoController.updateGeo)
         .delete('/:id', GeoController.removeGeoById)
-        .post('/e', GeoController.getElevation)
+        // .post('/e', GeoController.getElevation)
         
         
 }

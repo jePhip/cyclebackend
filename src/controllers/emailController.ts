@@ -1,9 +1,7 @@
-import nodemailer from 'nodemailer';
-import { brotliDecompressSync } from 'zlib';
+import nodemailer from "nodemailer";
+import { brotliDecompressSync } from "zlib";
 
-
-export default() => {
-
+export default () => {
   //create transporter
   const transporter = nodemailer.createTransport({
     service: "Gmail",
@@ -12,43 +10,32 @@ export default() => {
     secure: true,
     auth: {
       user: "bolivarcyclingtest@gmail.com",
-      pass: "udem gsyv okur orvl"
-          
+      pass: "udem gsyv okur orvl",
     },
   });
 
-    
-
   return {
-    sendSuggestion: ({body, set}) =>
-    { 
-
-    // mail options 
-    const mailOptions = {
-      from: 'bolivarcyclingtest@gmail.com',
-      to: 'bolivarcyclingtest@gmail.com',
-      subject: 'New Route Suggestion from Bolivar Cycling Website!',    
-      attachments: [{
-          filename: body.name + '.gpx',
-          content: body.route
-      }],
-      text: 'A new route has been submitted for your review! \n Name of route: ' + body.name
-
-  };
+    sendSuggestion: ({ body, set }) => {
+      // mail options
+      const mailOptions = {
+        from: "bolivarcyclingtest@gmail.com",
+        to: "bolivarcyclingtest@gmail.com",
+        subject: "New Route Suggestion from Bolivar Cycling Website!",
+        attachments: [
+          {
+            filename: body.name + ".gpx",
+            content: body.route,
+          },
+        ],
+        text:
+          "A new route has been submitted for your review! \n Name of route: " +
+          body.name,
+      };
       transporter.sendMail(mailOptions);
-    }
+      set.status = 200;
+      return new Response(JSON.stringify({ message: "success!" }), {
+        headers: { "Content-Type": "application/json" },
+      });
+    },
   };
-}
-
- 
-
-
-
-
-
-
- 
-
-
-  
-
+};

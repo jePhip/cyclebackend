@@ -46,12 +46,8 @@ const app = new Elysia() //
   )
   .use(isAuthenticated)
   .use(initAuth(db))
-  .on("beforeHandle", async ({ cookie, set, request }) => {
-    const cookieHeader = request.headers.get("Cookie") ?? "";
-    const sessionId = lucia.readSessionCookie(cookieHeader);
-    console.log(cookie, "cookie");
-    console.log(sessionId, "sessionid");
-    if (!sessionId) {
+  .on("beforeHandle", async ({ cookie, set, request, user, session }) => {
+    if (!session) {
       set.status = 401;
       return {
         success: false,
@@ -59,8 +55,7 @@ const app = new Elysia() //
         data: null,
       };
     }
-    const { session, user } = await lucia.validateSession(sessionId);
-    console.log(session, user, "sesion, user");
+
     if (!user) {
       set.status = 401;
       return {

@@ -33,7 +33,7 @@ export default (db: Database) => {
       set.status = 200; //OK status
       const endTime = performance.now();
       const elapsedTime = endTime - startTime;
-      console.log("query complete", endTime, "final time = ", elapsed time); 
+      console.log("query complete", endTime, "final time = ", elapsedTime); 
       return new Response(JSON.stringify({ routes: result }), {
         headers: { "Content-Type": "application/json" },
       });

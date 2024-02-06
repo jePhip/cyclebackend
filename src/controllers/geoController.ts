@@ -30,7 +30,7 @@ export default (db: Database) => {
       const query = db.query(`SELECT * FROM routes;`); //create database structure and edit ..change table 'maps?'
       const result = query.all();
       set.status = 200; //OK status
-      console.log("query complete")
+      console.log("query complete", JSON.stringify(result))
       return new Response(JSON.stringify({ routes: result }), {
         headers: { "Content-Type": "application/json" },
       });

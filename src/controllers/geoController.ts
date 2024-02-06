@@ -25,10 +25,12 @@ export default (db: Database) => {
     // },
 
     getGeoList: ({ set }) => {
+      console.log("running query")
+
       const query = db.query(`SELECT * FROM routes;`); //create database structure and edit ..change table 'maps?'
       const result = query.all();
       set.status = 200; //OK status
-
+      console.log("query complete")
       return new Response(JSON.stringify({ routes: result }), {
         headers: { "Content-Type": "application/json" },
       });
@@ -52,7 +54,7 @@ export default (db: Database) => {
     },
     createGeo: ({ body, set }) => {
       //body = json content of post request
-
+      console.log("running query")
       const query = db.prepare(
         `INSERT INTO routes (route, name, gpx, length, difficulty, terrain, desc, elevation) VALUES ($route, $name, $gpx, $length, $difficulty, $terrain, $desc, $elevation);`
       );
@@ -68,7 +70,7 @@ export default (db: Database) => {
         $desc: desc,
         $elevation: elevation,
       });
-
+      console.log("query complete")
       set.status = 200;
 
       return new Response(JSON.stringify({ message: "success!" }), {

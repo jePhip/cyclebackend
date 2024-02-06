@@ -3,7 +3,8 @@ import swagger from "@elysiajs/swagger";
 import cors from "@elysiajs/cors";
 import initDB from './database';
 import initGeo from './routes/geo';
-import initUsers from './routes/user'
+import initUsers from './routes/user';
+import initEmail from './routes/email';
 
 const db = initDB();
 
@@ -21,6 +22,7 @@ const app = new Elysia()//
   .group('/v1', app => app//group of endpoints
     .use(initGeo(db))//list of crud endpoints
     .use(initUsers(db))
+    .use(initEmail())
   )
   .listen(3000);
 

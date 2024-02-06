@@ -24,7 +24,7 @@ export default () => {
         attachments: [
           {
             filename: body.name + ".gpx",
-            content: body.route,
+            content: body.file,
           },
         ],
         text:

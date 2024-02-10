@@ -14,9 +14,11 @@
     "elysia": "latest",
     "lucia": "^3.0.1",
     "node-fetch": "^3.3.2",
-    "oslo": "^1.0.3"
+    "oslo": "^1.0.3",
+    "nodemailer": "^6.9.9"
   },
   "devDependencies": {
+    "@types/nodemailer": "^6.4.14",
     "bun-types": "latest"
   },
   "module": "src/index.js"

@@ -6,9 +6,11 @@
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
+    "@elysiajs/cookie": "^0.8.0",
     "@elysiajs/cors": "^0.7.0",
     "@elysiajs/jwt": "^0.8.0",
     "@elysiajs/swagger": "^0.7.2",
+    "@lucia-auth/adapter-sqlite": "^3.0.0",
     "elysia": "latest",
     "lucia": "^3.0.1",
     "node-fetch": "^3.3.2",

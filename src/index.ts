@@ -10,7 +10,6 @@ import { BunSQLiteAdapter } from "@lucia-auth/adapter-sqlite";
 import { isAuthenticated } from "./middleware/auth";
 import initAuth from "./routes/auth";
 import { cookie } from "@elysiajs/cookie";
-import authMiddleware from "./middleware/authMiddleware";
 import auth from "./routes/auth";
 export const db = initDB();
 export const adapter = new BunSQLiteAdapter(db, {

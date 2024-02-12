@@ -29,7 +29,7 @@ export default () => {
         ],
         text:
           "A new route has been submitted for your review! \n Name of route: " +
-          body.name,
+          body.name + "\nPoints of interest: " + body.poi + "\nContact email: " + body.email,
       };
       transporter.sendMail(mailOptions);
       set.status = 200;

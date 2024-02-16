@@ -10,7 +10,7 @@ export default () => {
     secure: true,
     auth: {
       user: "bolivarcyclingtest@gmail.com",
-      pass: "udem gsyv okur orvl",
+      pass: "",
     },
   });
 

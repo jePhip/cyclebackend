@@ -29,7 +29,7 @@ export const lucia = new Lucia(adapter, {
 const app = new Elysia() //
   .use(
     cors({
-      credentials: true,
+      origin: "http://localhost:8080",
     })
   ) //
   .use(

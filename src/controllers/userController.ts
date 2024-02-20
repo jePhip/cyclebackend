@@ -2,7 +2,7 @@ import Database from "bun:sqlite";
 
 export default (db: Database) => {
   return {
-    validateUser: ({ body, set }) => {
+    validateUser: ({ body, set }) => {//
       console.log("validating")
       const query = db.prepare(
         `SELECT (username,password) FROM user WHERE username = $username`

@@ -49,16 +49,10 @@ const app = new Elysia() //
         },
       },
     })
-  ).group("/v1", (app) =>
-  app
-
-    //group of endpoints
-    .use(initGetGeo(db)) //list of crud endpoints
-    .use(initEmail())
-)
+  )
+  
+  .group("/v1", (app) => app.use(initGetGeo(db)).use(initEmail()).use(initAuth(db))) //routes that that don't require authorization
   .use(isAuthenticated)
-  .group("/v1", (app) => app.use(initGetGeo(db)).use(initAuth(db))) //routes that that don't require authorization
-
   .on("beforeHandle", async ({ set, user, session }) => {
     if (!session) {
       set.status = 401;

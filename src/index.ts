@@ -33,7 +33,7 @@ export const lucia = new Lucia(adapter, {
 const app = new Elysia() //
   .use(
     cors({
-      origin: "http://localhost:8080",
+      origin: ['http://localhost:8080', 'https://bolivarcyclingroutes.com'],
     })
   ) //
   .use(

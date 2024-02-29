@@ -36,7 +36,7 @@ const app = new Elysia() //
       credentials: true,
       origin: [
         "http://localhost:8080/",
-        "https://bolivarcyclingroutes.com/"
+        "https://bolivarcyclingroutes.com/",
         'https://bolivarcyclingroutes.com',
         "http://localhost:3000",
         "https://bolivarcyclingroutes.com/login/",

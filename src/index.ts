@@ -28,7 +28,7 @@ export const lucia = new Lucia(adapter, {
       username: attributes.username,
     };
   },
-});
+});//
 
 const app = new Elysia() //
   .use(

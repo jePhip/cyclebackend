@@ -39,7 +39,7 @@ const app = new Elysia() //
     })
   ) //
   .use(
-    swagger({
+    swagger({//
       //documentation
       path: "/v1/docs",
       documentation: {

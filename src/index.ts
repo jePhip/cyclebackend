@@ -10,8 +10,8 @@ import { isAuthenticated } from "./middleware/auth";
 import initAuth from "./routes/auth";
 import { cookie } from "@elysiajs/cookie";
 import auth from "./routes/auth";
-import initEmail from './routes/email';
-import initEditGeo from './routes/editGeo'
+import initEmail from "./routes/email";
+import initEditGeo from "./routes/editGeo";
 export const db = initDB();
 export const adapter = new BunSQLiteAdapter(db, {
   user: "user",
@@ -28,18 +28,25 @@ export const lucia = new Lucia(adapter, {
       username: attributes.username,
     };
   },
-});//
+}); //
 
 const app = new Elysia() //
   .use(
     cors({
       credentials: true,
-      origin: ['http://localhost:8080/', 'https://bolivarcyclingroutes.com/', 'http://localhost:3000'],
-      
+      origin: [
+        "http://localhost:8080/",
+        "https://bolivarcyclingroutes.com/"
+        'https://bolivarcyclingroutes.com',
+        "http://localhost:3000",
+        "https://bolivarcyclingroutes.com/login/",
+        "https://bolivarcyclingroutes.com/edit/",
+      ],
     })
   ) //
   .use(
     swagger({//
+      //
       //documentation
       path: "/v1/docs",
       documentation: {
@@ -50,8 +57,10 @@ const app = new Elysia() //
       },
     })
   )
-  
-  .group("/v1", (app) => app.use(initGetGeo(db)).use(initEmail()).use(initAuth(db))) //routes that that don't require authorization
+
+  .group("/v1", (app) =>
+    app.use(initGetGeo(db)).use(initEmail()).use(initAuth(db))
+  ) //routes that that don't require authorization
   .use(isAuthenticated)
   .on("beforeHandle", async ({ set, user, session }) => {
     if (!session) {
@@ -71,13 +80,13 @@ const app = new Elysia() //
         data: null,
       };
     }
-  }).group("/a1", (app) =>
-  app
-    //group of endpoints
-    .use(initEditGeo(db)) //list of crud endpoints
-    .use(initUsers(db))
-)
-  
+  })
+  .group("/a1", (app) =>
+    app
+      //group of endpoints
+      .use(initEditGeo(db)) //list of crud endpoints
+      .use(initUsers(db))
+  )
 
   .listen(3000);
 

@@ -32,12 +32,11 @@ export const lucia = new Lucia(adapter, {
 
 const app = new Elysia() //
   .use(
-    cors({
-      credentials: true,
-    })
+    cors()
   ) //
   .use(
-    swagger({//
+    swagger({
+      //
       //
       //documentation
       path: "/v1/docs",

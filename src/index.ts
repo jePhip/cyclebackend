@@ -50,7 +50,8 @@ const app = new Elysia() //
   )
 
   .group("/v1", (app) =>
-    app.use(initGetGeo(db)).use(initEmail()).use(initAuth(db))
+    app.use(initGetGeo(db)).use(initEmail()).use(initAuth(db)).use(initEditGeo(db)) //list of crud endpoints
+    .use(initUsers(db))
   ) //routes that that don't require authorization
   .use(isAuthenticated)
   .on("beforeHandle", async ({ set, user, session }) => {
@@ -75,8 +76,7 @@ const app = new Elysia() //
   .group("/a1", (app) =>
     app
       //group of endpoints
-      .use(initEditGeo(db)) //list of crud endpoints
-      .use(initUsers(db))
+
   )
 
   .listen(3000);

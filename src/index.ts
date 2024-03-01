@@ -35,7 +35,7 @@ const app = new Elysia() //
     cors({
       credentials: true,
       origin: [
-        "https://bolivarcyclingroutes.com",
+        "https://www.bolivarcyclingroutes.com/"
       ],
     })
   ) //

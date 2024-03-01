@@ -8,7 +8,7 @@ export default (db: Database) => {
 
     return new Elysia({ prefix: '/geo'})
         .post('/', GeoController.createGeo)
-        .get('/', GeoController.consol)
+       // .get('/', GeoController.consol)
         .put('/:id', GeoController.updateGeo)
         .delete('/:id', GeoController.removeGeoById)
         // .post('/e', GeoController.getElevation)

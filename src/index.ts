@@ -31,9 +31,7 @@ export const lucia = new Lucia(adapter, {
 }); //
 
 const app = new Elysia() //
-  .use(
-    cors()
-  ) //
+  .use(cors()) //
   .use(
     swagger({
       //
@@ -50,10 +48,14 @@ const app = new Elysia() //
   )
 
   .group("/v1", (app) =>
-    app.use(initGetGeo(db)).use(initEmail()).use(initAuth(db)).use(initEditGeo(db)) //list of crud endpoints
-    .use(initUsers(db))
+    app
+      .use(initGetGeo(db))
+      .use(initEmail())
+      .use(initAuth(db))
+      .use(initEditGeo(db)) //list of crud endpoints
+      .use(initUsers(db))
   ) //routes that that don't require authorization
-  .use(isAuthenticated)
+  /*   .use(isAuthenticated)
   .on("beforeHandle", async ({ set, user, session }) => {
     if (!session) {
       set.status = 401;
@@ -77,7 +79,7 @@ const app = new Elysia() //
     app
       //group of endpoints
 
-  )
+  ) */
 
   .listen(3000);
 

@@ -10,8 +10,9 @@ import { isAuthenticated } from "./middleware/auth";
 import initAuth from "./routes/auth";
 import { cookie } from "@elysiajs/cookie";
 import auth from "./routes/auth";
-import initEmail from './routes/email';
-import initEditGeo from './routes/editGeo'
+import initEmail from "./routes/email";
+import initEditGeo from "./routes/editGeo";
+import { staticPlugin } from "@elysiajs/static";
 export const db = initDB();
 export const adapter = new BunSQLiteAdapter(db, {
   user: "user",
@@ -32,12 +33,12 @@ export const lucia = new Lucia(adapter, {
 
 const app = new Elysia() //
   .use(
-    cors({
-      credentials: true,
-      origin: ['http://localhost:8080', 'https://bolivarcyclingroutes.com'],
-      
+    staticPlugin({
+      prefix: "/",
+      alwaysStatic: true,
     })
-  ) //
+  )
+  .use(cors()) //
   .use(
     swagger({
       //documentation
@@ -50,34 +51,40 @@ const app = new Elysia() //
       },
     })
   )
-  
-  .group("/v1", (app) => app.use(initGetGeo(db)).use(initEmail()).use(initAuth(db))) //routes that that don't require authorization
-  .use(isAuthenticated)
-  .on("beforeHandle", async ({ set, user, session }) => {
-    if (!session) {
-      set.status = 401;
-      return {
-        success: false,
-        message: "Unauthorized",
-        data: null,
-      };
-    }
+  .get("/", async () => {
+    return Bun.file("./public/index.html");
+  })
 
-    if (!user) {
-      set.status = 401;
-      return {
-        success: false,
-        message: "Unauthorized",
-        data: null,
-      };
-    }
-  }).group("/a1", (app) =>
-  app
-    //group of endpoints
-    .use(initEditGeo(db)) //list of crud endpoints
-    .use(initUsers(db))
-)
-  
+  .group("/v1", (app) =>
+    app.use(initGetGeo(db)).use(initEmail()).use(initAuth(db))
+  ) //routes that that don't require authorization
+
+  .group("/a1", (app) =>
+    app
+      .use(isAuthenticated)
+      .on("beforeHandle", async ({ set, user, session }) => {
+        if (!session) {
+          set.status = 401;
+          return {
+            success: false,
+            message: "Unauthorized",
+            data: null,
+          };
+        }
+
+        if (!user) {
+          set.status = 401;
+          return {
+            success: false,
+            message: "Unauthorized",
+            data: null,
+          };
+        }
+      })
+      //group of endpoints
+      .use(initEditGeo(db)) //list of crud endpoints
+      .use(initUsers(db))
+  )
 
   .listen(3000);
 

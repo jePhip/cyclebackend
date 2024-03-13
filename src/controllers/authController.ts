@@ -8,7 +8,7 @@ export default (db: Database) => {
     logout: async ({ body, set, cookie: { name } }) => {
       await lucia.invalidateSession(name.value);
       set.status = 200;
-      return new Response(JSON.stringify({ message: "signed out!" }), {
+      return new Response(JSON.stringify({ message: "signed out" }), {
         headers: {
           "Content-Type": "application/json",
           "Set-Cookie": lucia.createBlankSessionCookie().serialize(),
@@ -25,14 +25,14 @@ export default (db: Database) => {
         !/^[a-z0-9_-]+$/.test(username)
       ) {
         set.status = 400;
-        return new Response(JSON.stringify({ message: "invalid username" }), {
+        return new Response(JSON.stringify({ message: "login failed" }), {
           headers: { "Content-Type": "application/json" },
         });
       }
       const password: string | null = body.password ?? null;
       if (!password || password.length < 6 || password.length > 255) {
         set.status = 400;
-        return new Response(JSON.stringify({ message: "invalid password" }), {
+        return new Response(JSON.stringify({ message: "login failed" }), {
           headers: { "Content-Type": "application/json" },
         });
       }
@@ -42,7 +42,7 @@ export default (db: Database) => {
         .get(username);
       if (!existingUser) {
         set.status = 400;
-        return new Response(JSON.stringify({ message: "no user found" }), {
+        return new Response(JSON.stringify({ message: "login failed" }), {
           headers: { "Content-Type": "application/json" },
         });
       }
@@ -53,7 +53,7 @@ export default (db: Database) => {
       );
       if (!validPassword) {
         set.status = 400;
-        return new Response(JSON.stringify({ message: "invalid password2" }), {
+        return new Response(JSON.stringify({ message: "login failed" }), {
           headers: { "Content-Type": "application/json" },
         });
       }
@@ -85,7 +85,7 @@ export default (db: Database) => {
         const password: string | null = body.password ?? null;
         if (!password || password.length < 6 || password.length > 255) {
           set.status = 400;
-          return new Response(JSON.stringify({ message: "invalid passwokr" }), {
+          return new Response(JSON.stringify({ message: "invalid password" }), {
             headers: { "Content-Type": "application/json" },
           });
         }

@@ -51,9 +51,6 @@ const app = new Elysia() //
       },
     })
   )
-  .get("/", async () => {
-    return Bun.file("./public/index.html");
-  })
 
   .group("/v1", (app) =>
     app.use(initGetGeo(db)).use(initEmail()).use(initAuth(db))
@@ -85,6 +82,9 @@ const app = new Elysia() //
       .use(initEditGeo(db)) //list of crud endpoints
       .use(initUsers(db))
   )
+  .get("/*", async () => {
+    return Bun.file("./public/index.html");
+  })
 
   .listen(3000);
 

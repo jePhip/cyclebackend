@@ -29,7 +29,7 @@ export const lucia = new Lucia(adapter, {
       username: attributes.username,
     };
   },
-});
+}); //
 
 const app = new Elysia() //
   .use(
@@ -41,6 +41,8 @@ const app = new Elysia() //
   .use(cors()) //
   .use(
     swagger({
+      //
+      //
       //documentation
       path: "/v1/docs",
       documentation: {

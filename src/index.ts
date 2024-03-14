@@ -81,8 +81,10 @@ const app = new Elysia() //
         }
       })
       //group of endpoints
+      //use GET on /user/checksession to check if session if valid
       .use(initEditGeo(db)) //list of crud endpoints
       .use(initUsers(db))
+
   )
   .get("/*", async () => {
     return Bun.file("./public/index.html");

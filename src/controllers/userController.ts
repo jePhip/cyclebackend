@@ -2,6 +2,16 @@ import Database from "bun:sqlite";
 
 export default (db: Database) => {
   return {
+    checksession: async ({ set }) => {
+      set.status = 200;
+      return new Response(JSON.stringify({ message: "passed" }), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    },
+
+    //deprecated
     validateUser: ({ body, set }) => {//
       console.log("validating")
       const query = db.prepare(

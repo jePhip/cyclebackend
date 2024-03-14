@@ -13,5 +13,6 @@ export default (db: Database) => {
     "/signup",
     AuthController.signupUser
   ).post("/login", AuthController.login)
-  .post("/logout", AuthController.logout);
+  .post("/logout", AuthController.logout)
+ ;
 };

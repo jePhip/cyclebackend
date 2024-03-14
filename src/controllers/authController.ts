@@ -5,6 +5,8 @@ import Database from "bun:sqlite";
 
 export default (db: Database) => {
   return {
+    
+
     logout: async ({ body, set, cookie: { name } }) => {
       await lucia.invalidateSession(name.value);
       set.status = 200;

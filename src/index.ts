@@ -38,11 +38,7 @@ const app = new Elysia() //
       alwaysStatic: true,
     })
   )
-  .use(
-    cors({
-      credentials: true,
-    })
-  ) //
+
   .use(
     swagger({
       //

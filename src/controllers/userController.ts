@@ -2,10 +2,20 @@ import Database from "bun:sqlite";
 
 export default (db: Database) => {
   return {
-    validateUser: ({ body, set }) => {
+    checksession: async ({ set }) => {
+      set.status = 200;
+      return new Response(JSON.stringify({ message: "passed" }), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    },
+
+    //deprecated
+    validateUser: ({ body, set }) => {//
       console.log("validating")
       const query = db.prepare(
-        `SELECT (username,password) FROM users WHERE username = $username`
+        `SELECT (username,password) FROM user WHERE username = $username`
       );
       const username = body.username;
       const password = body.password;
@@ -23,7 +33,7 @@ export default (db: Database) => {
     },
 
     getUserList: ({ set }) => {
-      const query = db.query(`SELECT * FROM users;`);
+      const query = db.query(`SELECT * FROM user;`);
       const result = query.all();
       set.status = 200; //OK status
 
@@ -33,7 +43,7 @@ export default (db: Database) => {
     },
     getUserById: ({ params: { id }, set }) => {
       console.log("in get user");
-      const query = db.query(`SELECT * FROM users WHERE id = $id;`);
+      const query = db.query(`SELECT * FROM user WHERE id = $id;`);
       const result = query.get({ $id: id });
       set.status = 200;
 
@@ -42,7 +52,7 @@ export default (db: Database) => {
       });
     },
     removeUserById: ({ params: { id }, set }) => {
-      const query = db.query(`DELETE FROM users WHERE id = $id;`);
+      const query = db.query(`DELETE FROM user WHERE id = $id;`);
       const result = query.get({ $id: id });
       set.status = 200;
       return new Response(JSON.stringify({ message: "success!", id }), {

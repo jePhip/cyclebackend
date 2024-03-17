@@ -4,15 +4,16 @@ import { brotliDecompressSync } from "zlib";
 export default () => {
   //create transporter
   const transporter = nodemailer.createTransport({
-    service: "Gmail",
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    service: process.env.EMAIL_SERVICE,
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    secure: process.env.EMAIL_SECURE,
     auth: {
-      user: "bolivarcyclingtest@gmail.com",
-      pass: "udem gsyv okur orvl",
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
     },
   });
+
 
   return {
     sendSuggestion: ({ body, set }) => {

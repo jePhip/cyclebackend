@@ -12,16 +12,13 @@ export default (db: Database) => {
         headers: { "Content-Type": "application/json" },
       });
     },
-    consol: () => {
-      console.log("hit");
-    },
+
     createGeo: ({ body, set }) => {
       //body = json content of post request
-      console.log("running query");
       const query = db.prepare(
-        `INSERT INTO routes (route, name, gpx, length, difficulty, terrain, desc, elevation) VALUES ($route, $name, $gpx, $length, $difficulty, $terrain, $desc, $elevation);`
+        `INSERT INTO routes (route, name, gpx, length, difficulty, terrain, desc, elevation, poi) VALUES ($route, $name, $gpx, $length, $difficulty, $terrain, $desc, $elevation, $poi);`
       );
-      const { route, name, gpx, length, difficulty, terrain, desc, elevation } =
+      const { route, name, gpx, length, difficulty, terrain, desc, elevation, poi } =
         body;
       query.run({
         $route: JSON.stringify(route),
@@ -32,8 +29,8 @@ export default (db: Database) => {
         $terrain: terrain,
         $desc: desc,
         $elevation: elevation,
+        $poi: poi
       });
-      console.log("query complete");
       set.status = 200;
 
       return new Response(JSON.stringify({ message: "success!" }), {

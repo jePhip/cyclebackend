@@ -11,7 +11,8 @@ db.query(
     length DOUBLE,
     terrain TEXT,
     desc TEXT,
-    elevation DOUBLE
+    elevation DOUBLE,
+    poi TEXT
   );`
 ).run();
 
@@ -40,5 +41,6 @@ db.query(`CREATE TABLE IF NOT EXISTS session (
   length FLOAT/DOUBLE  <--
   terrain TEXT,
   difficulty INTEGER <--
+  poi TEXT
 */
 export default () => db;

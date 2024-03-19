@@ -5,17 +5,18 @@ import Database from "bun:sqlite";
 
 export default (db: Database) => {
   return {
-    
-
     logout: async ({ body, set, cookie: { name } }) => {
       await lucia.invalidateSession(name.value);
       set.status = 200;
-      return new Response(JSON.stringify({ message: "signed out" }), {
-        headers: {
-          "Content-Type": "application/json",
-          "Set-Cookie": lucia.createBlankSessionCookie().serialize(),
-        },
-      });
+      return new Response(
+        JSON.stringify({ success: true, message: "signed out" }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Set-Cookie": lucia.createBlankSessionCookie().serialize(),
+          },
+        }
+      );
     },
 
     login: async ({ body, set }) => {
@@ -62,12 +63,15 @@ export default (db: Database) => {
 
       const session = await lucia.createSession(existingUser.id, {});
       set.status = 200;
-      return new Response(JSON.stringify({ message: "successful signin" }), {
-        headers: {
-          "Content-Type": "application/json",
-          "Set-Cookie": lucia.createSessionCookie(session.id).serialize(),
-        },
-      });
+      return new Response(
+        JSON.stringify({ success: true, message: "successful signin" }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Set-Cookie": lucia.createSessionCookie(session.id).serialize(),
+          },
+        }
+      );
     },
 
     signupUser: async ({ body, set }) => {
@@ -102,11 +106,14 @@ export default (db: Database) => {
 
           const session = await lucia.createSession(userId, {});
           set.status = 200;
-          return new Response(JSON.stringify({ message: "success!" }), {
-            headers: {
-              "Set-Cookie": lucia.createSessionCookie(session.id).serialize(),
-            },
-          });
+          return new Response(
+            JSON.stringify({ success: true, message: "success!" }),
+            {
+              headers: {
+                "Set-Cookie": lucia.createSessionCookie(session.id).serialize(),
+              },
+            }
+          );
         } catch (e) {
           set.status = 500;
           return new Response(JSON.stringify({ message: e.message }), {
